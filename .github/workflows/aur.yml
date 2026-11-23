@@ -26,12 +26,7 @@ jobs:
       - name: Check Execution Context
         id: check
         run: |
-          if [[ "${{ github.ref_type }}" == "branch" ]]; then
-            echo "This action is triggered by a push on a branch. Skipping... (${{ matrix.pkgname }})."
-            echo "skip=true" >> $GITHUB_OUTPUT
-          else
-            echo "skip=false" >> $GITHUB_OUTPUT
-          fi
+          echo "skip=false" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Setup SSH keys
