@@ -24,7 +24,6 @@ jobs:
 
       - name: Extract Git Tag version
         id: version_extract
-        if: steps.check.outputs.skip == 'false'
         run: |
           if git describe --tags &> /dev/null; then
             VERSION=$(git describe --long --tags --abbrev=7 | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')
