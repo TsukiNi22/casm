@@ -4,7 +4,7 @@ run-name: Nix Publisher | ${{ github.event_name }} by ${{ github.actor }} on '${
 
 on:
   push:
-    branch:
+    branches:
       - main
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+*"
