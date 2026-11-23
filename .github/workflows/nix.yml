@@ -1,0 +1,50 @@
+name: Nix Publisher
+
+run-name: Nix Publisher | ${{ github.event_name }} by ${{ github.actor }} on '${{ github.ref_name }}'
+
+on:
+  push:
+    branch:
+      - main
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+*"
+
+permissions:
+  contents: write
+
+jobs:
+  update-flake:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Extract Git Tag version
+        id: version_extract
+        if: steps.check.outputs.skip == 'false'
+        run: |
+          if git describe --tags &> /dev/null; then
+            VERSION=$(git describe --long --tags --abbrev=7 | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')
+          else
+            COUNT=$(git rev-list --count HEAD)
+            HASH=$(git rev-parse --short=7 HEAD)
+            VERSION="0.0.0r${COUNT}.g${HASH}"
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Update version in flake.nix
+        run: |
+          sed -i 's/version = ".*";/version = "${{ steps.version_extract.outputs.version }}";/' flake.nix
+
+      - name: Commit and push changes
+        run: |
+          git config user.email "servoskull@omnissiah.mars"
+          git config user.name "Servo Skull"
+
+          git add flake.nix
+
+          git diff --quiet && git diff --staged --quiet || (git commit -m "workflow: bump flake.nix version to ${{ steps.version_extract.outputs.version }}" && git push origin main)
