@@ -87,7 +87,7 @@ nix run github:YetAnotherMechanicusEnjoyer/casm
 
 **Install via a Flake:**
 ```nix
-inputs.casm.url = "github:<owner>/<repository>";
+inputs.casm.url = "github:YetAnotherMechanicusEnjoyer/casm";
 ```
 
 ```nix
