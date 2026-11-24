@@ -69,7 +69,7 @@ EXAMPLES:
   casm clean
 ```
 
-## Installation (AUR / Nix)
+## Installation
 
 ### Arch Linux ([AUR](https://aur.archlinux.org/packages/casm-cli))
 
@@ -106,54 +106,8 @@ inputs.casm.url = "github:YetAnotherMechanicusEnjoyer/casm";
 
 *(Note: I am purely speculating, I still need confirmation from a Nix user.)*
 
-## Installation (DEB / RPM)
-
-### Debian / Ubuntu (APT)
-
-> [!IMPORTANT]
-> Requires the [Quick Setup - 2 (Limited)](#quick-setup---2-limited) first
-
-e.g.:
-```bash
-sudo apt install casm
-```
-
-### Fedora / RHEL (DNF)
-
-> [!IMPORTANT]
-> Requires the [Quick Setup - 2 (Limited)](#quick-setup---2-limited) first
-
-e.g.:
-```bash
-sudo dnf install casm
-```
-
-## Setup
-
-### Quick Setup - 1 (all)
-> Setup into `/usr/local`
-
-Requires `cmake`, `nasm` and `binutils`
-
-#### Clone the repository
-```bash
-git clone https://github.com/YetAnotherMechanicusEnjoyer/casm.git
-cd casm
-```
-
-#### Install
-```bash
-export BUILD_DIR=build
-cmake -S . -B $BUILD_DIR
-sudo cmake --install $BUILD_DIR              # /usr/local/bin/casm
-cmake --install $BUILD_DIR --prefix ~/.local # or without root: ~/.local/bin/casm
-```
-
-### Quick Setup - 2 (Limited)
+### DEB / RPM
 > Setup into `/usr`
-
-> [!WARNING]
-> Restriction: `fedora-based (rpm)`, `debian-based (deb)`
 
 Registers the casm repository (`gh-pages` branch) in `dnf` or `apt`
 
@@ -166,3 +120,29 @@ wget -qO- https://raw.githubusercontent.com/YetAnotherMechanicusEnjoyer/casm/mai
 | `--install` | Also installs `casm` |
 | `--no-sudo` | Runs without `sudo` (already root) |
 | `-h`, `--help` | Displays the usage |
+
+### Debian / Ubuntu (APT)
+
+e.g.:
+```bash
+sudo apt install casm
+```
+
+### Fedora / RHEL (DNF)
+
+e.g.:
+```bash
+sudo dnf install casm
+```
+
+### Manual install
+> Setup into `/usr/bin`
+
+Requires `nasm` and `binutils`
+
+#### Clone the repository & Install
+```bash
+git clone https://github.com/YetAnotherMechanicusEnjoyer/casm.git
+cd casm
+sudo mv ./casm /usr/bin/casm
+```
